@@ -1,37 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import Widget from "../Components/Widget";
 
 const Home = () => {
- const handleRemove = () => {
-    alert("Widget removed!");
+  const [widget, setWidget] = useState([]);
+
+
+
+  function addWidget(type) {
+    const newWidget = {
+      id: Date.now().toString(),
+      type: type,
+    };
+    setWidget((prev) => [...prev, newWidget]);
+  }
+
+  const handleRemove = (id) => {
+    setWidget((prev) => prev.filter((w) => w.id !== id));
   };
+
   return (
     <>
-      <Widget title="Quote of the Day" onRemove={handleRemove}>
-        <p>"The best way to get started is to quit talking and begin doing."</p>
-      </Widget>{" "}
-      <section className="bg-gray-200 ">
-        <h1 className="p-10">Shobhit rawat</h1>
+      {/* Buttons to add widgets */}
+      <div className="flex gap-4 p-4">
+        <button
+          onClick={() => addWidget("quote")}
+          className="bg-blue-500 text-white px-3 py-1 rounded"
+        >
+          Add Quote
+        </button>
+        <button
+          onClick={() => addWidget("clock")}
+          className="bg-blue-500 text-white px-3 py-1 rounded"
+        >
+          Add Clock
+        </button>
+        <button
+          onClick={() => addWidget("pomodoro")}
+          className="bg-blue-500 text-white px-3 py-1 rounded"
+        >
+          Add Pomodoro
+        </button>
+      </div>
 
-        <p className="p-10">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam
-          sapiente quam voluptate consequatur, sequi in! Minima molestiae
-          voluptate reiciendis harum. Nostrum qui soluta adipisci! Incidunt odit
-          accusamus rerum labore aliquam!
-        </p>
-        <p className="p-10">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam
-          sapiente quam voluptate consequatur, sequi in! Minima molestiae
-          voluptate reiciendis harum. Nostrum qui soluta adipisci! Incidunt odit
-          accusamus rerum labore aliquam!
-        </p>
-        <p className="p-10">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsam
-          sapiente quam voluptate consequatur, sequi in! Minima molestiae
-          voluptate reiciendis harum. Nostrum qui soluta adipisci! Incidunt odit
-          accusamus rerum labore aliquam!
-        </p>
-      </section>
+      <div className="flex flex-wrap">
+        {widget.map((widget) => (
+          <Widget
+            key={widget.id}
+            title={widget.type}
+            onRemove={() => handleRemove(widget.id)}
+          >
+            {widget.type === "quote" && (
+              <p>
+                "The best way to get started is to quit talking and begin doing."
+              </p>
+            )}
+            {widget.type === "clock" && <p>[Clock will go here]</p>}
+            {widget.type === "pomodoro" && <p>[Pomodoro Timer will go here]</p>}
+          </Widget>
+        ))}
+      </div>
     </>
   );
 };

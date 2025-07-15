@@ -47,7 +47,11 @@ const Header = () => {
                 Contact
               </NavLink>
             </li>
+          <NavLink to="/login">
+            <button className="bg-blue-700 p-2 px-4 rounded-xl text-white">Login</button>
+          </NavLink>
           </ul>
+
         </div>
       </nav>
     </header>
